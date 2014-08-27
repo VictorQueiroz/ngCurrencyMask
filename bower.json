@@ -1,0 +1,19 @@
+{
+  "name": "ngCurrencyMask",
+  "version": "1.0.0",
+  "authors": [
+    "Victor Queiroz <victorcqueirozg@gmail.com>"
+  ],
+  "description": "Format an entire input as a currency.",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
