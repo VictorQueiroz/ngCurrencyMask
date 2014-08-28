@@ -88,6 +88,34 @@
 
 					expect($viewValue).toBe(11443);
 				});
+
+				it('should include a zero when the number have only two characters', function () {
+					scope.currency = '12';
+					scope.$digest();
+
+					expect(form.masked.$viewValue).toBe('R$ 0,12');
+				});
+
+				it('should not include a zero when the number have more than two characters', function () {
+					scope.currency = '112';
+					scope.$digest();
+
+					expect(form.masked.$viewValue).toBe('R$ 1,12');
+				});
+
+				it('should remove the zero at the start of the string', function () {
+					scope.currency = '000112';
+					scope.$digest();
+
+					expect(form.masked.$viewValue).toBe('R$ 1,12');
+				});
+
+				it('should add cents even if we have more than one zero at the start of the string', function () {
+					scope.currency = '000000011250';
+
+					scope.$digest();
+					expect(form.masked.$viewValue).toBe('R$ 112,50');
+				});
 			});
 		});
 	});
