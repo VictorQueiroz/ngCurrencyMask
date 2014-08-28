@@ -62,6 +62,32 @@
 
 					expect($viewValue).toBe(1020);
 				});
+
+				it('should not accept digit characters', function () {
+					scope.currency = 'This is a phrase.';
+					scope.$digest();
+
+					expect(form.unmasked.$viewValue).toBe('');
+				});
+
+				it('should accept non-digit characters', function () {
+					scope.currency = 25000;
+					scope.$digest();
+
+					var unmaskedViewValue = Number(form.unmasked.$viewValue);
+
+					expect(unmaskedViewValue).toBe(25000);
+					expect(form.masked.$viewValue).toBe('R$ 250,00');
+				});
+
+				it('should exclude digit characters', function () {
+					scope.currency = 'Th1s 1s 4 phr4s3.';
+					scope.$digest();
+
+					var $viewValue = Number(form.unmasked.$viewValue);
+
+					expect($viewValue).toBe(11443);
+				});
 			});
 		});
 	});
