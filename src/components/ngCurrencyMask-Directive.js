@@ -4,7 +4,7 @@
 	angular
 		.module('ngCurrencyMask/Directive/ngCurrencyMask', [])
 
-		.directive('ngCurrencyMask', ['ngCurrencyMaskConfig', function (config) {
+		.directive('ngCurrencyMask', ['Masker', function (Masker) {
 		  return {
 		    restrict: 'A',
 		    require: ['?ngModel'],
@@ -14,22 +14,15 @@
 		    	/**
 		    	 * Mask @value matching it contents.
 		    	 */
-		      var maskValue = function (value) {
-		        var maskedValue = value.toString(),
-		        		matches = config.matches;
-		        
-		        matches.forEach(function (key) {
-		          maskedValue = maskedValue.replace(key.replace, key.with);
-		        });
-		        
-		        return maskedValue;
+		      var maskValue = function (value) {		        
+		        return Masker.maskValue(value);
 		      };
 		      
 		      /**
 		       * Return @value to it real value.
 		       */
 		      var unmaskValue = function (value) {
-		        return value.replace(/\D/g, '');
+		        return Masker.unmaskValue(value);
 		      };
 		      
 		      /**

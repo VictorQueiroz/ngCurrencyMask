@@ -2,7 +2,11 @@
   'use strict';
   
   angular
-    .module('ngCurrencyMask', ['ngCurrencyMask/Directives'])
+    .module('ngCurrencyMask', [
+    	'ngCurrencyMask/Services',
+    	'ngCurrencyMask/Directives',
+    	'ngCurrencyMask/Filters'    	
+    ])
 
     .value('ngCurrencyMaskConfig', {
 			// Matches who will be applied to the input content.
