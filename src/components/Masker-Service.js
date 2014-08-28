@@ -10,7 +10,7 @@
 		   */
 		  var maskValue = function (value) {
 		    var maskedValue = value.toString(),
-		    		matches = config.matches;
+		    		matches = config.maskMatches;
 		    
 		    matches.forEach(function (key) {
 		      maskedValue = maskedValue.replace(key.replace, key.with);
@@ -23,8 +23,13 @@
 		   * Return @value to it real value.
 		   */
 		  var unmaskValue = function (value) {
-		  	var unmaskedValue = maskValue(value).replace(/\D/g, '');
-
+		    var unmaskedValue = value.toString(),
+		    		matches = config.unmaskMatches;
+		    
+		    matches.forEach(function (key) {
+		      unmaskedValue = unmaskedValue.replace(key.replace, key.with);
+		    });
+		    
 		    return unmaskedValue;
 		  };
 
