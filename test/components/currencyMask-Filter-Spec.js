@@ -39,6 +39,22 @@
 
 					expect(unmaskedValue).toBe(1000);
 				});
+
+				it('should insert a custom currency', function () {
+					var maskedValue = currencyMaskFilter(100000, 'mask', 'US');
+
+					expect(maskedValue).toBe('US 1.000,00');
+				});
+
+				it('should keep default currency if the value of third filter field is null', function () {
+					var maskedValue = currencyMaskFilter(100000000, 'mask', 'ANY CURRENCY');
+
+					expect(maskedValue).toBe('ANY CURRENCY 1.000.000,00');
+
+					var maskedValue = currencyMaskFilter(10, 'mask', null);
+
+					expect(maskedValue).toBe('R$ 0,10');					
+				});
 			});
 		});
 	});

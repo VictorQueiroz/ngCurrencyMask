@@ -4,13 +4,18 @@
 	angular
 		.module('ngCurrencyMask/Service/Masker', [])
 
-		.factory('Masker', ['ngCurrencyMaskConfig', function (config) {
+		.factory('Masker', ['$currencyMask', function (defaults) {
 			var addCurrency = function (value, currency) {
 				if(!value) return value;
 
+				/**
+				 * Converts @value to a String instance, for Number
+				 * instances doesn't have .replace() prototype.
+				 */
 				var newValue = value.toString();
 
-				newValue = newValue.replace(/^/, currency ? currency + ' ' : config.currency);
+				// Implements the currency at @newValue
+				newValue = newValue.replace(/^/, (currency ? currency : defaults.currency) + ' ');
 
 				return newValue;
 			};
@@ -20,7 +25,7 @@
 		   */
 		  var maskValue = function (value, currency) {
 		    var maskedValue = value.toString(),
-		    		matches = config.maskMatches;
+		    		matches = defaults.maskMatches;
 		    
 		    matches.forEach(function (key) {
 		      maskedValue = maskedValue.replace(key.replace, key.with);
@@ -36,7 +41,7 @@
 		   */
 		  var unmaskValue = function (value) {
 		    var unmaskedValue = value.toString(),
-		    		matches = config.unmaskMatches;
+		    		matches = defaults.unmaskMatches;
 		    
 		    matches.forEach(function (key) {
 		      unmaskedValue = unmaskedValue.replace(key.replace, key.with);
