@@ -30,7 +30,7 @@
 			describe('ngCurrencyMask directive', function () {
 				beforeEach(function () {
 					element = angular.element('<form name="form">' +
-						'<input type="text" name="masked" ng-model="currency" ng-currency-mask>' +
+						'<input type="text" name="masked" ng-model="currency" data-currency="R$" ng-currency-mask>' +
 						'<input type="text" name="unmasked" ng-model="currency" class="clean-of-mask">' +
 					'</form>');
 					element = $compile(element)(scope);

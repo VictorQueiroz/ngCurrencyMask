@@ -9,13 +9,14 @@
 		    restrict: 'A',
 		    require: ['?ngModel'],
 		    link: function (scope, element, attrs, controllers) {
-		    	var ngModel = controllers[0];
+		    	var ngModel = controllers[0],
+		      		currency = !attrs.currency ? null : attrs.currency;
 
 		    	/**
 		    	 * Mask @value matching it contents.
 		    	 */
-		      var maskValue = function (value) {		        
-		        return Masker.maskValue(value);
+		      var maskValue = function (value) {
+		        return Masker.maskValue(value, currency);
 		      };
 		      
 		      /**

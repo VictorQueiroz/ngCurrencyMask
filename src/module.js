@@ -9,6 +9,8 @@
     ])
 
     .value('ngCurrencyMaskConfig', {
+    	currency: 'R$ ',
+
 			// Matches who will be applied to the input content.
 			maskMatches: [
 				{ 'replace': /[^\d]/g, 'with': "" },
@@ -16,8 +18,7 @@
 				{ 'replace': /,(\d{3,})$/, 'with': '$1,00' },
 				{ 'replace': /^(0{1,})/, 'with': '' },
 				{ 'replace': /^,(\d{2})$/, 'with': "0,$1" },
-				{ 'replace': /(\d)(?=(\d{3})+(?!\d))/g, 'with': "$1." },
-				{ 'replace': /^/, 'with': "R$ " }
+				{ 'replace': /(\d)(?=(\d{3})+(?!\d))/g, 'with': "$1." }
 			],
 
 			unmaskMatches: [
