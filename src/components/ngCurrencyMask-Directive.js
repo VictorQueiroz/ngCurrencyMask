@@ -7,13 +7,15 @@
 		.directive('ngCurrencyMask', ['ngCurrencyMaskConfig', function (config) {
 		  return {
 		    restrict: 'A',
-		    require: '?ngModel',
-		    link: function (scope, element, attrs, ngModel) {
+		    require: ['?ngModel'],
+		    link: function (scope, element, attrs, controllers) {
+		    	var ngModel = controllers[0];
+
 		    	/**
 		    	 * Mask @value matching it contents.
 		    	 */
 		      var maskValue = function (value) {
-		        var maskedValue = value,
+		        var maskedValue = value.toString(),
 		        		matches = config.matches;
 		        
 		        matches.forEach(function (key) {
@@ -37,7 +39,7 @@
 		      var parser = function (value) {
 		        return unmaskValue(value);
 		      };
-		      
+
 		      ngModel.$parsers.push(parser);
 		      
 		      /**
@@ -46,6 +48,8 @@
 		       * all the typed content.
 		       */
 		      scope.$watch(attrs.ngModel, function (value) {
+		      	if(!value || value.length < 1) { return; }
+
 		        var maskedValue = maskValue(value);
 		        
 		        if(maskedValue != value) {
