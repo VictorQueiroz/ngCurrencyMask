@@ -28,7 +28,7 @@
 				}));
 
 				it('should mask the input', function () {
-					var maskedValue = currencyMaskFilter(1000, 'mask');
+					var maskedValue = currencyMaskFilter(10.00, 'mask');
 
 					expect(maskedValue).toBe('R$ 10,00');
 				});
@@ -37,21 +37,21 @@
 					var unmaskedValue = currencyMaskFilter('R$ 10,00', 'unmask');
 					unmaskedValue = Number(unmaskedValue);
 
-					expect(unmaskedValue).toBe(1000);
+					expect(unmaskedValue).toBe(10.00);
 				});
 
 				it('should insert a custom currency', function () {
-					var maskedValue = currencyMaskFilter(100000, 'mask', 'US');
+					var maskedValue = currencyMaskFilter(1000.00, 'mask', 'US');
 
 					expect(maskedValue).toBe('US 1.000,00');
 				});
 
 				it('should keep default currency if the value of third filter field is null', function () {
-					var maskedValue = currencyMaskFilter(100000000, 'mask', 'ANY CURRENCY');
+					var maskedValue = currencyMaskFilter(1000000.00, 'mask', 'ANY CURRENCY');
 
 					expect(maskedValue).toBe('ANY CURRENCY 1.000.000,00');
 
-					var maskedValue = currencyMaskFilter(10, 'mask', null);
+					var maskedValue = currencyMaskFilter(0.10, 'mask', null);
 
 					expect(maskedValue).toBe('R$ 0,10');					
 				});

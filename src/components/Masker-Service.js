@@ -28,7 +28,11 @@
 		    		matches = defaults.maskMatches;
 		    
 		    matches.forEach(function (key) {
-		      maskedValue = maskedValue.replace(key.replace, key.with);
+		    	if(typeof key.replace === 'function') {
+		    		maskedValue = key.replace(maskedValue);
+		    	} else if (typeof key.replace === 'object') {
+		      	maskedValue = maskedValue.replace(key.replace, key.with);
+		    	}
 		    });
 
 		    maskedValue = addCurrency(maskedValue, currency);
@@ -44,7 +48,11 @@
 		    		matches = defaults.unmaskMatches;
 		    
 		    matches.forEach(function (key) {
-		      unmaskedValue = unmaskedValue.replace(key.replace, key.with);
+		    	if(typeof key.replace === 'function') {
+		    		unmaskedValue = key.replace(unmaskedValue);
+		    	} else if (typeof key.with === 'object') {
+		      	unmaskedValue = unmaskedValue.replace(key.replace, key.with);
+		    	}
 		    });
 		    
 		    return unmaskedValue;
