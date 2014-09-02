@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "karma start --no-single-run --log-level debug"
+    "test": "karma start --single-run --log-level debug"
   },
   "author": "",
   "license": "ISC",
