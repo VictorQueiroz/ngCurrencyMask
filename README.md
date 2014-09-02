@@ -1,4 +1,4 @@
-ngCurrencyMask
+ngCurrencyMask [![Build Status](https://travis-ci.org/VictorQueiroz/ngCurrencyMask.svg?branch=default-param-filter)](https://travis-ci.org/VictorQueiroz/ngCurrencyMask)
 ==============
 
 Format an entire input as a currency. Check this live [demo](http://plnkr.co/edit/zjJw8gfvaVFIUN9OIvea?p=preview) example.
