@@ -28,7 +28,11 @@
 		    		matches = defaults.maskMatches;
 		    
 		    matches.forEach(function (key) {
-		      maskedValue = maskedValue.replace(key.replace, key.with);
+		    	if(key.replace instanceof Function) {
+		    		maskedValue = key.replace(maskedValue);
+		    	} else {
+		      	maskedValue = maskedValue.replace(key.replace, key.with);
+		    	}
 		    });
 
 		    maskedValue = addCurrency(maskedValue, currency);
@@ -44,7 +48,11 @@
 		    		matches = defaults.unmaskMatches;
 		    
 		    matches.forEach(function (key) {
-		      unmaskedValue = unmaskedValue.replace(key.replace, key.with);
+		    	if(key.replace instanceof Function) {
+		    		unmaskedValue = key.replace(unmaskedValue);
+		    	} else {
+		      	unmaskedValue = unmaskedValue.replace(key.replace, key.with);
+		    	}
 		    });
 		    
 		    return unmaskedValue;
