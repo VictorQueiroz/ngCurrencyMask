@@ -38,13 +38,6 @@
 					scope.$digest();
 				});
 
-				return it('shoud be a cent', function () {
-					scope.currency = 1;
-					scope.$digest();
-
-					console.log(form.masked.$viewValue, form.masked.$modelValue)
-				});
-
 				it('should have masked content', function () {
 					expect(form.masked.$viewValue).toBe('R$ 1.000,00');
 				});
@@ -70,14 +63,14 @@
 					expect($viewValue).toBe(10.20);
 				});
 
-				it('should not accept digit characters', function () {
+				it('should not accept non-digit characters', function () {
 					scope.currency = 'This is a phrase.';
 					scope.$digest();
 
 					expect(form.unmasked.$viewValue).toBe('');
 				});
 
-				it('should accept non-digit characters', function () {
+				it('should accept digit characters', function () {
 					scope.currency = 250.00;
 					scope.$digest();
 
@@ -87,7 +80,7 @@
 					expect(form.masked.$viewValue).toBe('R$ 250,00');
 				});
 
-				it('should exclude digit characters', function () {
+				it('should exclude non-digit characters', function () {
 					scope.currency = 'Th1s 1s 4 phr4s3.';
 					scope.$digest();
 
@@ -96,7 +89,7 @@
 					expect($viewValue).toBe(114.43);
 				});
 
-				it('should include a zero when the number have only two characters', function () {
+				it('should include a zero when the user have digited only two characters', function () {
 					scope.currency = 0.12;
 					scope.$digest();
 
@@ -115,6 +108,15 @@
 					scope.$digest();
 
 					expect(form.masked.$viewValue).toBe('R$ 1,12');
+
+					// another test
+					scope.currency = '000000000000000000000250.00';
+					scope.$digest();
+
+					var unmaskedViewValue = Number(form.unmasked.$viewValue);
+
+					expect(unmaskedViewValue).toBe(250.00);
+					expect(form.masked.$viewValue).toBe('R$ 250,00');					
 				});
 
 				it('should add cents even if we have more than one zero at the start of the string', function () {

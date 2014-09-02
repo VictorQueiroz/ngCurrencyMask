@@ -28,16 +28,16 @@
 				}));
 
 				it('should mask the input', function () {
-					var maskedValue = currencyMaskFilter(10.00, 'mask');
+					var maskedValue = currencyMaskFilter('10.00', 'mask');
 
 					expect(maskedValue).toBe('R$ 10,00');
 				});
 
 				it('should unmask the input', function () {
 					var unmaskedValue = currencyMaskFilter('R$ 10,00', 'unmask');
-					unmaskedValue = Number(unmaskedValue);
+					unmaskedValue = parseFloat(unmaskedValue);
 
-					expect(unmaskedValue).toBe(10.00);
+					expect(unmaskedValue).toBe(10);
 				});
 
 				it('should insert a custom currency', function () {
@@ -55,6 +55,17 @@
 
 					expect(maskedValue).toBe('R$ 0,10');					
 				});
+
+				it('should mask and unmask the input', function () {
+					var maskedValue = currencyMaskFilter(10.0, 'mask');
+
+					expect(maskedValue).toBe('R$ 10,00');
+
+					var unmaskedValue = currencyMaskFilter(maskedValue, 'unmask');
+					unmaskedValue = parseFloat(unmaskedValue);
+
+					expect(unmaskedValue).toBe(10);
+				})
 			});
 		});
 	});

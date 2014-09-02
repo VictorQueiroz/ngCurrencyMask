@@ -28,9 +28,9 @@
 		    		matches = defaults.maskMatches;
 		    
 		    matches.forEach(function (key) {
-		    	if(typeof key.replace === 'function') {
+		    	if(key.replace instanceof Function) {
 		    		maskedValue = key.replace(maskedValue);
-		    	} else if (typeof key.replace === 'object') {
+		    	} else {
 		      	maskedValue = maskedValue.replace(key.replace, key.with);
 		    	}
 		    });
@@ -48,9 +48,9 @@
 		    		matches = defaults.unmaskMatches;
 		    
 		    matches.forEach(function (key) {
-		    	if(typeof key.replace === 'function') {
+		    	if(key.replace instanceof Function) {
 		    		unmaskedValue = key.replace(unmaskedValue);
-		    	} else if (typeof key.with === 'object') {
+		    	} else {
 		      	unmaskedValue = unmaskedValue.replace(key.replace, key.with);
 		    	}
 		    });

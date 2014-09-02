@@ -5,75 +5,53 @@
 		.module('ngCurrencyMask/Provider/currencyMask', [])
 
 		.provider('$currencyMask', function () {
+			var maskMatches = [
+				{ 'replace': /(\.[0-9])(?=[0-9]{0}$)/g, 'with': '$10' }, // Converts XXXX.X to XXXX.X0
+				{ 'replace': /^(\d)*(?=(\d{0,})$)/g, 'with': '$&,00' }, // Converts XXXX to XXXX,00
+				{ 'replace': /\D/g, 'with': "" }, // Converts all non-digit numbers to ''
+				{ 'replace': /^(\d{1})$/, 'with': '0,0$1' }, // Converts X to 0,0X
+				{ 'replace': /(\d{2})$/, 'with': ',$1'}, // Converts XX to 0,XX
+				{ 'replace': /,(\d{3,})$/, 'with': '$1,00' }, // Converts X,XXX to X,XX
+				{ 'replace': /^,(\d{2})$/, 'with': "0,$1" }, // Converts ,XX to 0,XX
+				{ 'replace': /(\d)(?=(\d{3})+(?!\d))/g, 'with': "$1." } // Converts XXXXXX to XXX.XXX
+			],
+
+			unmaskMatches = [
+				{ 'replace': /\D/g, 'with': "" }, // Converts  all non-digit numbers to ''
+				{ 'replace': /^(\d{1})$/, 'with': '0.0$1' }, // Converts X to X.0X
+				{ 'replace': /(\d{2})$/, 'with': '.$1'}, // Converts XX to .XX
+				{ 'replace': /(,00|\.00$)/g, 'with': '' }, // Converts all ,XX and .XX to nothing				
+				{ 'replace': /^(0{1,})/, 'with': '' }, // Converts zeros at the start of the string to nothing
+				{ 'replace': /^\.(\d{2})$/, 'with': "0.$1" }, // Converts .XX to 0.XX
+
+				/**
+				 * Clean the end of the string from
+				 * unsignificant numbers converting
+				 * XXX.30XXXX to XXX.30
+				 */
+				{ 'replace': function (value) {
+						if(!value) return '';
+
+						var regex = new RegExp('\.(\d{3,})$'),
+						match = value.match(regex);
+
+						if(match instanceof Array && match[1]) {
+							value = value.replace(match, match.toString().substr(0, 2));
+						}
+
+						return value;
+					}
+				}
+			];
+
 			var $self = this,
 			$currencyMask = {
 				currency: 'R$',
 
 				// Matches who will be applied to the input content.
-				maskMatches: [
-					{ 'replace': function (value) {
-						return value.toString();
-					} },
-					{ 'replace': function (value) {
-						/**
-						 * Example: http://regex101.com/r/iW4qG0/1
-						 */
-						var match = /(\.[0-9])(?=[0-9]{0}$)/g;
+				maskMatches: maskMatches,
 
-						return value.replace(match, '$10');
-					} },
-					{ 'replace': function (value) {
-						return value.replace(value[value.lastIndexOf('.')], ',');
-					} },
-					{ 'replace': function (value) {
-						/**
-						 * Example: http://regex101.com/r/lE0tN9/1
-						 */
-						if(value[value.length - 3] !== '.') {
-							value = value.replace(/^(\d)*(?=(\d{0,})$)/g, '$&.00');
-						}
-
-						return value;
-					} },
-					{ 'replace': /[^\d]/g, 'with': "" },
-					{ 'replace': /(\d{2})$/, 'with': ",$1" },
-					{ 'replace': /,(\d{3,})$/, 'with': '$1,00' },
-					{ 'replace': /^(0{1,})/, 'with': '' },
-					{ 'replace': /^,(\d{2})$/, 'with': "0,$1" },
-					{ 'replace': /(\d)(?=(\d{3})+(?!\d))/g, 'with': "$1." }
-				],
-
-				unmaskMatches: [
-					{ 'replace': function (value) {
-						return value;
-					} },
-					{ 'replace': function (value) {
-						if(!value) return '';
-
-						/**
-						 * Example: http://regex101.com/r/dZ0rX7/1
-						 */
-						var match = (value.match(/(^[\d\D]{0,})(\,)/))[1];
-
-						if(match) {
-							value = value.replace(match, match.replace(/\D/g, ''));
-						}
-						
-						value = value.replace(value[value.lastIndexOf(',')], '.');
-
-						return value;
-					} },
-					{ replace: /^(\d{1})$/, with: '0.0$1'},
-					{ 'replace': /(\d{2})$/, 'with': ".$1" },
-					{ 'replace': /\.(\d{3,})$/, 'with': '$1.00' },
-					{ 'replace': /^(0{1,})/, 'with': '' },
-					{ 'replace': /^\.(\d{2})$/, 'with': "0.$1" },
-					{ replace: function (value) {
-						if(!value) return '';
-
-						return parseFloat(value);
-					} }
-				]
+				unmaskMatches: unmaskMatches
 			};
 
 			this.setCurrency = function (currency) {

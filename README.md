@@ -9,15 +9,13 @@ bower install ng-currency-mask --save
 ```
 
 ## Loading the module
-```
-<script>
+```js
 	angular
 	  .module('app', ['ngCurrencyMask']);
-</script>
 ```
 
 ## Applying in the DOM
-```
+```html
 <form>
 	<input type="text" ng-model="value" ng-currency-mask> <!-- Masked input -->
 	{{ text }} <!-- Unmasked output -->
@@ -25,7 +23,9 @@ bower install ng-currency-mask --save
 ```
 
 ## Using 'currencyMask' filter
-```
+
+In the DOM:
+```html
 <form>
 	<input type="text" ng-model="value"> <!-- Unmasked input -->
 	{{ value | currencyMask:'mask':'USD' }} <!-- Masked output -->
@@ -34,16 +34,37 @@ bower install ng-currency-mask --save
 </form>
 ```
 
-## Configuring
+On your controller, through `$filter`:
+```js
+	angular
+		.module('app', ['ngCurrencyMask'])
+
+		.controller('ProductCreateCtrl', function ($filter, Product) {
+			var myCurrency = 'USD',
+			currencyMaskFilter = $filter('currencyMask');
+
+			$scope.product = new Product;
+
+			$scope.saveProduct = function (product) {
+				$scope.product.price = currencyMaskFilter('unmask', myCurrency);
+			}
+		});
 ```
-<script>
+
+## Configuring
+```js
 	angular
 	  .module('app', ['ngCurrencyMask'])
 
 	  .config(['$currencyMaskProvider', function ($currencyMaskProvider) {
-	  	$currencyMaskProvider.setCurrency('USD');
+	  	// $currencyMaskProvider.setCurrency('USD');
+	  	// $currencyMaskProvider.setCurrency('BRL');
+	  	$currencyMaskProvider.setCurrency('MyAnotherCurrency');
+
+	  	$currencyMaskProvider.addMaskMatch(function (value) {
+	  		return value;
+	  	});
 	  }]);
-</script>
 ```
 
 ### $currencyMaskProvider
@@ -52,7 +73,8 @@ bower install ng-currency-mask --save
 	- `currency` - The `currency` which will be used all time for directives, filters.
 
 - `addMaskMatch(replace, value)`
-	- `replace` - The value/regular expression which will be used to match the searched value in the input content.
+	- `replace` {String|RegExp|Function} - The value/regular expression which will be used to match the searched value in the input content.
+		- `Function` (value) - It should return the value with the changes which you want, see the example below.
 	- `value` - The value which will replace the found string at the input content.
 
 - `addUnmaskMatch(replace, value)` It will be used when your field is getting unserialized and all the commas and dots are getting removed.
