@@ -1,13 +1,13 @@
 {
   "name": "ngCurrencyMask",
-  "version": "1.0.5",
+  "version": "1.0.51",
   "description": "Format an entire input as a currency.",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "karma start --single-run --log-level debug"
+    "test": "karma start --single-run"
   },
   "author": "",
   "license": "ISC",

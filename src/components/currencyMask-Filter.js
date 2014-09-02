@@ -17,7 +17,7 @@
 			};
 
 			var digestCurrency = function (currency) {
-				if(currency === null) {
+				if(currency === null || currency === 'default') {
 					return null;
 				} else {
 					return currency;
@@ -25,6 +25,10 @@
 			};
 
 			return function (input, mode, currency) {
+				if(!input) return '';
+
+				input = input.toString();
+
 				// If there is no 'mode' defined. Mask the input.
 				var mode = mode ? digestMode(mode) : digestMode('mask'),
 				digestedCurrency = currency ? digestCurrency(currency) : digestCurrency(null);

@@ -65,7 +65,17 @@
 					unmaskedValue = parseFloat(unmaskedValue);
 
 					expect(unmaskedValue).toBe(10);
-				})
+				});
+
+				it('should use the default currency', function () {
+					var maskedValue = currencyMaskFilter(5.0, 'mask', 'default');
+
+					expect(maskedValue).toBe('R$ 5,00');
+
+					var unmaskedValue = parseFloat(currencyMaskFilter(maskedValue, 'unmask', 'default'));
+
+					expect(unmaskedValue).toBe(5.00);					
+				});
 			});
 		});
 	});

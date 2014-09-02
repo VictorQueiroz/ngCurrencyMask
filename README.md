@@ -30,6 +30,7 @@ In the DOM:
 	<input type="text" ng-model="value"> <!-- Unmasked input -->
 	{{ value | currencyMask:'mask':'USD' }} <!-- Masked output -->
 	{{ value | currencyMask:'mask':'BRL' }} <!-- Masked output -->
+	{{ value | currencyMask:'mask':'default' }} <!-- Masked output -->
 	{{ value | currencyMask:'unmask' }} <!-- Unmasked output -->
 </form>
 ```
