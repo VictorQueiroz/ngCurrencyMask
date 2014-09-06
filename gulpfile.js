@@ -15,13 +15,6 @@ gulp.task('clean', function (cb) {
 gulp.task('build', ['clean'], function () {
 	gulp.src(paths.scripts)
 		.pipe(sourcemaps.init())
-			.pipe(uglify({
-				output: {
-					beautify: true
-				},
-
-				compress: false
-			}))
 			.pipe(concat('ng-currency-mask.js'))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist'));
