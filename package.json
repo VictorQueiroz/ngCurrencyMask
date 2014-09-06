@@ -1,6 +1,6 @@
 {
   "name": "ngCurrencyMask",
-  "version": "1.0.51",
+  "version": "1.0.52",
   "description": "Format an entire input as a currency.",
   "main": "index.js",
   "directories": {

@@ -24,7 +24,7 @@
 		   * Mask @value matching it contents.
 		   */
 		  var maskValue = function (value, currency) {
-		    var maskedValue = value.toString(),
+		    var maskedValue = value ? value.toString() : '',
 		    		matches = defaults.maskMatches;
 		    
 		    matches.forEach(function (key) {
@@ -44,7 +44,7 @@
 		   * Return @value to it real value.
 		   */
 		  var unmaskValue = function (value) {
-		    var unmaskedValue = value.toString(),
+		    var unmaskedValue = value ? value.toString() : '',
 		    		matches = defaults.unmaskMatches;
 		    
 		    matches.forEach(function (key) {
