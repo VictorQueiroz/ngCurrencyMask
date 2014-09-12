@@ -1,4 +1,5 @@
 # ngCurrencyMask
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/VictorQueiroz/ngCurrencyMask?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/VictorQueiroz/ngCurrencyMask)
 [![Build Status](http://img.shields.io/travis/VictorQueiroz/ngCurrencyMask.svg?style=flat)](https://travis-ci.org/VictorQueiroz/ngCurrencyMask)
