@@ -3,7 +3,7 @@
 angular
 	.module('ngCurrencyMask.directives.ngCurrencyMask', [])
 
-	.directive('ngCurrencyMask', ['Masker', function (Masker) {
+	.directive('ngCurrencyMask', function ($masker) {
 		return {
 			restrict: 'A',
 			require: ['?ngModel'],
@@ -15,14 +15,14 @@ angular
 				 * Mask @value matching it contents.
 				 */
 				var maskValue = function (value) {
-					return Masker.maskValue(value, currency);
+					return $masker.maskValue(value, currency);
 				};
 				
 				/**
 				 * Return @value to it real value.
 				 */
 				var unmaskValue = function (value) {
-					return Masker.unmaskValue(value);
+					return $masker.unmaskValue(value);
 				};
 				
 				/**
@@ -52,4 +52,4 @@ angular
 				});
 			}
 		};
-	}]);
+	});

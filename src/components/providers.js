@@ -2,5 +2,5 @@
 
 angular
 	.module('ngCurrencyMask.providers', [
-		'ngCurrencyMask.providers.currencyMask'
+		'ngCurrencyMask.providers.masker'
 	]);
