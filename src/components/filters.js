@@ -1,6 +1,4 @@
-(function () {
-	'use strict';
+'use strict';
 
-	angular
-		.module('ngCurrencyMask.filters', ['ngCurrencyMask.filters.currencyMask']);
-})();
+angular
+	.module('ngCurrencyMask.filters', ['ngCurrencyMask.filters.currencyMask']);

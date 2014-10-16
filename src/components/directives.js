@@ -1,6 +1,4 @@
-(function () {
-	'use strict';
+'use strict';
 
-	angular
-		.module('ngCurrencyMask.directives', ['ngCurrencyMask.directives.ngCurrencyMask']);
-})();
+angular
+	.module('ngCurrencyMask.directives', ['ngCurrencyMask.directives.ngCurrencyMask']);
