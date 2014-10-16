@@ -1,12 +1,7 @@
-(function () {
-	'use strict';
+'use strict';
 
-	var MODULE_NAME = 'ngCurrencyMask',
-	MODULE_DEPENDENCIES = [],
-	MODULE_CONTROLLERS = [],
-	MODULE_DIRECTIVES = [];
+describe('ngCurrencyMask', function () {
+	var MODULE_NAME = 'ngCurrencyMask';
 
-	describe(MODULE_NAME + ' module', function () {
-		beforeEach(module(MODULE_NAME));
-	});
-})();
+	beforeEach(module('ngCurrencyMask'));
+});
