@@ -62,18 +62,18 @@ On your controller, through `$filter`:
 	angular
 	  .module('app', ['ngCurrencyMask'])
 
-	  .config(['$currencyMaskProvider', function ($currencyMaskProvider) {
-	  	// $currencyMaskProvider.setCurrency('USD');
-	  	// $currencyMaskProvider.setCurrency('BRL');
-	  	$currencyMaskProvider.setCurrency('MyAnotherCurrency');
+	  .config(['$maskerProvider', function ($maskerProvider) {
+	  	// $maskerProvider.setCurrency('USD');
+	  	// $maskerProvider.setCurrency('BRL');
+	  	$maskerProvider.setCurrency('MyAnotherCurrency');
 
-	  	$currencyMaskProvider.addMaskMatch(function (value) {
+	  	$maskerProvider.addMaskMatch(function (value) {
 	  		return value;
 	  	});
 	  }]);
 ```
 
-### $currencyMaskProvider
+### $maskerProvider
 
 - `setCurrency(currency)`
 	- `currency` - The `currency` which will be used all time for directives, filters.

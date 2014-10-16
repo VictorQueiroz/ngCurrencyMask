@@ -2,7 +2,6 @@
 
 angular
 	.module('ngCurrencyMask', [
-		'ngCurrencyMask.services',
 		'ngCurrencyMask.directives',
 		'ngCurrencyMask.filters',
 		'ngCurrencyMask.providers'

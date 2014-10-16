@@ -3,7 +3,7 @@
 angular
 	.module('ngCurrencyMask.filters.currencyMask', [])
 
-	.filter('currencyMask', ['Masker', function (Masker) {
+	.filter('currencyMask', function ($masker) {
 		var digestMode = function (mode) {
 			switch(mode) {
 				case 'mask':
@@ -33,11 +33,11 @@ angular
 			digestedCurrency = currency ? digestCurrency(currency) : digestCurrency(null);
 
 			if(mode === 1) {
-				var maskedValue = Masker.maskValue(input, digestedCurrency);
+				var maskedValue = $masker.maskValue(input, digestedCurrency);
 
 				return maskedValue;
 			} else if (mode === 2) {
-				return Masker.unmaskValue(input);
+				return $masker.unmaskValue(input);
 			};
 		};
-	}]);
+	});
