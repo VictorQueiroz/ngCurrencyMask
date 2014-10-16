@@ -2,5 +2,5 @@
 	'use strict';
 
 	angular
-		.module('ngCurrencyMask/Services', ['ngCurrencyMask/Service/Masker']);
+		.module('ngCurrencyMask.services', ['ngCurrencyMask.services.Masker']);
 })();

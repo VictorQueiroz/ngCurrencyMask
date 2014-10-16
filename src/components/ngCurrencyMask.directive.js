@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('ngCurrencyMask/Directive/ngCurrencyMask', [])
+		.module('ngCurrencyMask.directives.ngCurrencyMask', [])
 
 		.directive('ngCurrencyMask', ['Masker', function (Masker) {
 		  return {

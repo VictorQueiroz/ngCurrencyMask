@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('ngCurrencyMask/Provider/currencyMask', [])
+		.module('ngCurrencyMask.providers.currencyMask', [])
 
 		.provider('$currencyMask', function () {
 			var maskMatches = [

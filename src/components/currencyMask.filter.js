@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('ngCurrencyMask/Filter/currencyMask', [])
+		.module('ngCurrencyMask.filters.currencyMask', [])
 
 		.filter('currencyMask', ['Masker', function (Masker) {
 			var digestMode = function (mode) {

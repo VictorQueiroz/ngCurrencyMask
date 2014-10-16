@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var MODULE_NAME = 'ngCurrencyMask/Directive/ngCurrencyMask',
+	var MODULE_NAME = 'ngCurrencyMask.directives.ngCurrencyMask',
 	MODULE_DEPENDENCIES = [
 		'ngCurrencyMask'
 	],

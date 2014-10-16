@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('ngCurrencyMask/Providers', [
-			'ngCurrencyMask/Provider/currencyMask'
+		.module('ngCurrencyMask.providers', [
+			'ngCurrencyMask.providers.currencyMask'
 		]);
 })();
