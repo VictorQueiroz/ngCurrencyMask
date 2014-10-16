@@ -2,5 +2,5 @@
 	'use strict';
 
 	angular
-		.module('ngCurrencyMask/Directives', ['ngCurrencyMask/Directive/ngCurrencyMask']);
+		.module('ngCurrencyMask.directives', ['ngCurrencyMask.directives.ngCurrencyMask']);
 })();

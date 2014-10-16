@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('ngCurrencyMask/Service/Masker', [])
+		.module('ngCurrencyMask.services.Masker', [])
 
 		.factory('Masker', ['$currencyMask', function (defaults) {
 			var addCurrency = function (value, currency) {
