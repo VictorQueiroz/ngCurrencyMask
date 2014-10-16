@@ -1,8 +1,11 @@
 var gulp = require('gulp');
+var path = require('path');
+
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
+var karma = require('karma').server;
 
 var paths = {
 	scripts: ['src/**/*.js']
@@ -10,6 +13,13 @@ var paths = {
 
 gulp.task('clean', function (cb) {
 	del(['build'], cb);
+});
+
+gulp.task('test', function (done) {
+	karma.start({
+		configFile: path.join(__dirname, 'karma.conf.js'),
+		singleRun: true
+	}, done);
 });
 
 gulp.task('build', ['clean'], function () {
