@@ -50,6 +50,19 @@ angular
 						ngModel.$render();
 					}
 				});
+
+				element.on('keypress', function (evt) {
+	                if (evt.which < 48 || evt.which > 57) {
+	                    evt.preventDefault();
+	                }
+	            })
+
+	            element.on('paste', function (evt) {
+	                var pasteData = evt.originalEvent.clipboardData.getData('text')
+	                if(isNaN(pasteData)){
+	                    evt.preventDefault();
+	                }
+	            })
 			}
 		};
 	});
