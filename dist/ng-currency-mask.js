@@ -12,42 +12,42 @@ angular
 	.module('ngCurrencyMask.filters.currencyMask', [])
 
 	.filter('currencyMask', ["$masker", function ($masker) {
-		var digestMode = function (mode) {
-			switch(mode) {
-				case 'mask':
-					return 1;
-					break;
-				case 'unmask':
-					return 2;
-					break;
-			}
-		};
+	    var digestMode = function (mode) {
+	        switch (mode) {
+	            case 'mask':
+	                return 1;
+	                break;
+	            case 'unmask':
+	                return 2;
+	                break;
+	        }
+	    };
 
-		var digestCurrency = function (currency) {
-			if(currency === null || currency === 'default') {
-				return null;
-			} else {
-				return currency;
-			};
-		};
+	    var digestCurrency = function (currency) {
+	        if (currency === null || currency === 'default') {
+	            return null;
+	        } else {
+	            return currency;
+	        };
+	    };
 
-		return function (input, mode, currency) {
-			if(!input) return '';
+	    return function (input, mode, currency) {
+	        if (!input) return '';
 
-			input = input.toString();
+	        input = input.toString();
 
-			// If there is no 'mode' defined. Mask the input.
-			var mode = mode ? digestMode(mode) : digestMode('mask'),
+	        // If there is no 'mode' defined. Mask the input.
+	        var mode = mode ? digestMode(mode) : digestMode('mask'),
 			digestedCurrency = currency ? digestCurrency(currency) : digestCurrency(null);
 
-			if(mode === 1) {
-				var maskedValue = $masker.maskValue(input, digestedCurrency);
+	        if (mode === 1) {
+	            var maskedValue = $masker.maskValue(input, digestedCurrency);
 
-				return maskedValue;
-			} else if (mode === 2) {
-				return $masker.unmaskValue(input);
-			};
-		};
+	            return maskedValue;
+	        } else if (mode === 2) {
+	            return $masker.unmaskValue(input);
+	        };
+	    };
 	}]);
 'use strict';
 
@@ -63,27 +63,27 @@ angular
 	.module('ngCurrencyMask.providers.masker', [])
 
 	.provider('$masker', function () {
-		var $maskerProvider = this;
+	    var $maskerProvider = this;
 
-		this.defaults = {
-			currency: 'R$',
+	    this.defaults = {
+	        currency: 'R$',
 
-			maskMatches: [
+	        maskMatches: [
 				{ 'replace': /(\.[0-9])(?=[0-9]{0}$)/g, 'with': '$10' },// Converts XXXX.X to XXXX.X0
 				{ 'replace': /^(\d)*(?=(\d{0,})$)/g, 'with': '$&,00' },// Converts XXXX to XXXX,00
 				{ 'replace': /^(\d{1})$/, 'with': '0,0$1' },// Converts X to 0,0X
-				{ 'replace': /(\d{2})$/, 'with': ',$1'},// Converts XX to 0,XX
+				{ 'replace': /(\d{2})$/, 'with': ',$1' },// Converts XX to 0,XX
 				{ 'replace': /,(\d{3,})$/, 'with': '$1,00' },// Converts X,XXX to X,XX
 				{ 'replace': /^,(\d{2})$/, 'with': "0,$1" },// Converts ,XX to 0,XX
 				{ 'replace': /(?:\,{2,})+/g, 'with': "," },// Converts all duplicated comma for just one
 				{ 'replace': /[A-z{}\[\]_!\.]/g, 'with': "" },// Converts all non-digit numbers to ''
 				{ 'replace': /(\d)(?=(\d{3})+(?!\d))/g, 'with': "$1." },// Converts XXXXXX to XXX.XXX				
-			],
+	        ],
 
-			unmaskMatches: [
+	        unmaskMatches: [
 				{ 'replace': /\D/g, 'with': "" }, // Converts  all non-digit numbers to ''
 				{ 'replace': /^(\d{1})$/, 'with': '0.0$1' }, // Converts X to X.0X
-				{ 'replace': /(\d{2})$/, 'with': '.$1'}, // Converts XX to .XX
+				{ 'replace': /(\d{2})$/, 'with': '.$1' }, // Converts XX to .XX
 				{ 'replace': /(,00|\.00$)/g, 'with': '' }, // Converts all ,XX and .XX to nothing				
 				{ 'replace': /^(0{1,})/, 'with': '' }, // Converts zeros at the start of the string to nothing
 				{ 'replace': /^\.(\d{2})$/, 'with': "0.$1" }, // Converts .XX to 0.XX
@@ -93,120 +93,121 @@ angular
 				 * unsignificant numbers converting
 				 * XXX.30XXXX to XXX.30
 				 */
-				{ 'replace': function (value) {
-						if(!value) return '';
+				{
+				    'replace': function (value) {
+				        if (!value) return '';
 
-						var regex = new RegExp('\.(\d{3,})$'),
+				        var regex = new RegExp('\.(\d{3,})$'),
 						match = value.match(regex);
 
-						if(match instanceof Array && match[1]) {
-							value = value.replace(match, match.toString().substr(0, 2));
-						}
+				        if (match instanceof Array && match[1]) {
+				            value = value.replace(match, match.toString().substr(0, 2));
+				        }
 
-						return value;
-					}
+				        return value;
+				    }
 				}
-			]
-		};
+	        ]
+	    };
 
-		this.setCurrency = function (currency) {
-			$maskerProvider.currency = currency;
+	    this.setCurrency = function (currency) {
+	        $maskerProvider.currency = currency;
 
-			return $maskerProvider;
-		};
+	        return $maskerProvider;
+	    };
 
-		/**
+	    /**
 		 * Add a new match task to $masker.unmaskMatches.
 		 */
-		this.addUnmaskMatch = function (replace, value) {
-			$maskerProvider.unmaskMatches.unshift({
-				'replace': replace,
-				'with': value
-			});
+	    this.addUnmaskMatch = function (replace, value) {
+	        $maskerProvider.unmaskMatches.unshift({
+	            'replace': replace,
+	            'with': value
+	        });
 
-			return $maskerProvider;
-		};			
+	        return $maskerProvider;
+	    };
 
-		/**
+	    /**
 		 * Add a new match task to $masker.maskMatches.
 		 */
-		this.addMaskMatch = function (replace, value) {
-			var match = {};
+	    this.addMaskMatch = function (replace, value) {
+	        var match = {};
 
-			if(!value) {
-				match.replace = replace;
-			} else {
-				match.replace = replace;
-				match.with = value;
-			}
+	        if (!value) {
+	            match.replace = replace;
+	        } else {
+	            match.replace = replace;
+	            match.with = value;
+	        }
 
-			$maskerProvider.maskMatches.unshift(match);
+	        $maskerProvider.maskMatches.unshift(match);
 
-			return $maskerProvider;
-		};
+	        return $maskerProvider;
+	    };
 
-		this.$get = function () {
-			function $MaskerFactory () {
-				var $masker = {};
+	    this.$get = function () {
+	        function $MaskerFactory() {
+	            var $masker = {};
 
-				function addCurrency (value, currency) {
-					if(!value) return value;
+	            function addCurrency(value, currency) {
+	                if (!value) return value;
 
-					/**
+	                /**
 					 * Converts @value to a String instance, for Number
 					 * instances doesn't have .replace() prototype.
 					 */
-					var newValue = value.toString();
+	                var newValue = value.toString();
 
-					// Implements the currency at @newValue
-					newValue = newValue.replace(/^/, (currency ? currency : $maskerProvider.defaults.currency) + ' ');
+	                // Implements the currency at @newValue
+	                newValue = newValue.replace(/^/, (currency ? currency : $maskerProvider.defaults.currency) + ' ');
 
-					return newValue;
-				};
+	                return newValue;
+	            };
 
-				/**
+	            /**
 				 * Mask @value matching it contents.
 				 */
-				$masker.maskValue = function (value, currency) {
-					var maskedValue = value ? value.toString() : '',
+	            $masker.maskValue = function (value, currency) {
+	                var maskedValue = value ? value.toString() : '',
 							matches = $maskerProvider.defaults.maskMatches;
-					
-					matches.forEach(function (key) {
-						if(key.replace instanceof Function) {
-							maskedValue = key.replace(maskedValue);
-						} else {
-							maskedValue = maskedValue.replace(key.replace, key.with);
-						}
-					});
 
-					maskedValue = addCurrency(maskedValue, currency);
+	                matches.forEach(function (key) {
+	                    if (key.replace instanceof Function) {
+	                        maskedValue = key.replace(maskedValue);
+	                    } else {
+	                        maskedValue = maskedValue.replace(key.replace, key.with);
+	                    }
+	                });
 
-					return maskedValue;
-				};
-				
-				/**
+	                maskedValue = addCurrency(maskedValue, currency);
+
+	                return maskedValue;
+	            };
+
+	            /**
 				 * Return @value to it real value.
 				 */
-				$masker.unmaskValue = function (value) {
-					var unmaskedValue = value ? value.toString() : '',
+	            $masker.unmaskValue = function (value) {
+	                var unmaskedValue = value ? value.toString() : '',
 							matches = $maskerProvider.defaults.unmaskMatches;
-					
-					matches.forEach(function (key) {
-						if(key.replace instanceof Function) {
-							unmaskedValue = key.replace(unmaskedValue);
-						} else {
-							unmaskedValue = unmaskedValue.replace(key.replace, key.with);
-						}
-					});
-					
-					return unmaskedValue;
-				};
 
-				return $masker;
-			}
+	                matches.forEach(function (key) {
+	                    if (key.replace instanceof Function) {
+	                        unmaskedValue = key.replace(unmaskedValue);
+	                    } else {
+	                        unmaskedValue = unmaskedValue.replace(key.replace, key.with);
+	                    }
+	                });
 
-			return new $MaskerFactory;
-		};
+	                return unmaskedValue;
+	            };
+
+	            return $masker;
+	        }
+
+	        return new $MaskerFactory;
+	    };
 	});
 'use strict';
 
@@ -214,54 +215,54 @@ angular
 	.module('ngCurrencyMask.directives.ngCurrencyMask', [])
 
 	.directive('ngCurrencyMask', ["$masker", function ($masker) {
-		return {
-			restrict: 'A',
-			require: ['?ngModel'],
-			link: function (scope, element, attrs, controllers) {
-				var ngModel = controllers[0],
+	    return {
+	        restrict: 'A',
+	        require: ['?ngModel'],
+	        link: function (scope, element, attrs, controllers) {
+	            var ngModel = controllers[0],
 						currency = !attrs.currency ? null : attrs.currency;
 
-				/**
+	            /**
 				 * Mask @value matching it contents.
 				 */
-				var maskValue = function (value) {
-					return $masker.maskValue(value, currency);
-				};
-				
-				/**
+	            var maskValue = function (value) {
+	                return $masker.maskValue(value, currency);
+	            };
+
+	            /**
 				 * Return @value to it real value.
 				 */
-				var unmaskValue = function (value) {
-					return $masker.unmaskValue(value);
-				};
-				
-				/**
+	            var unmaskValue = function (value) {
+	                return $masker.unmaskValue(value);
+	            };
+
+	            /**
 				 * Parser who will be applied to the ngModel
 				 * before the goes to DOM. That is the real ngModel value.
 				 */
-				var parser = function (value) {
-					return unmaskValue(value);
-				};
+	            var parser = function (value) {
+	                return unmaskValue(value);
+	            };
 
-				ngModel.$parsers.push(parser);
-				
-				/**
+	            ngModel.$parsers.push(parser);
+
+	            /**
 				 * Everytime the input suffer a change,
 				 * the directive will update it and mask
 				 * all the typed content.
 				 */
-				scope.$watch(attrs.ngModel, function (value) {
-					if(!value || value.length < 1) { return; }
+	            scope.$watch(attrs.ngModel, function (value) {
+	                if (!value || value.length < 1) { return; }
 
-					var maskedValue = maskValue(value);
-					
-					if(maskedValue != value) {
-						ngModel.$setViewValue(maskedValue);
-						ngModel.$render();
-					}
-				});
+	                var maskedValue = maskValue(value);
 
-				element.on('keypress', function (evt) {
+	                if (maskedValue != value) {
+	                    ngModel.$setViewValue(maskedValue);
+	                    ngModel.$render();
+	                }
+	            });
+
+	            element.on('keypress', function (evt) {
 	                if (evt.which < 48 || evt.which > 57) {
 	                    evt.preventDefault();
 	                }
@@ -269,12 +270,12 @@ angular
 
 	            element.on('paste', function (evt) {
 	                var pasteData = evt.originalEvent.clipboardData.getData('text')
-	                if(isNaN(pasteData)){
+	                if (isNaN(pasteData)) {
 	                    evt.preventDefault();
 	                }
 	            })
-			}
-		};
+	        }
+	    };
 	}]);
 'use strict';
 
