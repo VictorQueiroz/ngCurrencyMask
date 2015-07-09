@@ -51,18 +51,30 @@ angular
 					}
 				});
 
-				element.on('keypress', function (evt) {
-	                if (evt.which < 48 || evt.which > 57) {
+				element.bind('paste', function (evt) {
+	                var clipboardData = evt.clipboardData || evt.originalEvent.clipboardData || window.clipboardData;
+	                var pastedData = clipboardData.getData('text');
+	                if (isNaN(pastedData)) {
 	                    evt.preventDefault();
 	                }
-	            })
+	            });
 
-	            element.on('paste', function (evt) {
-	                var pasteData = evt.originalEvent.clipboardData.getData('text')
-	                if(isNaN(pasteData)){
+	            element.bind('keypress', function (evt) {
+	                var charCode = evt.charCode;
+	                var keyCode = evt.which ? evt.which : evt.keyCode;
+
+	                if(evt.ctrlKey && keyCode == 118){
+	                    return;
+	                }
+
+	                if (charCode == 0)
+	                    return;
+
+	                if (keyCode < 48 || keyCode > 57) {
 	                    evt.preventDefault();
 	                }
-	            })
+
+	            });
 			}
 		};
 	});
