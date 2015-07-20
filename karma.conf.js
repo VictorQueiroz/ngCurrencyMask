@@ -17,8 +17,11 @@ module.exports = function(config) {
     files: [
       'bower_components/angular/angular.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'src/**/*.js',
-      'test/**/*.spec.js'
+      'bower_components/angular-i18n/angular-locale_pt-br.js',
+      
+      'src/module.js',
+
+      'test/**/*.js'
     ],
 
 
