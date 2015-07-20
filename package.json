@@ -1,6 +1,6 @@
 {
   "name": "ngCurrencyMask",
-  "version": "1.0.61",
+  "version": "1.0.7",
   "description": "Format an entire input as a currency.",
   "main": "index.js",
   "directories": {
@@ -19,6 +19,7 @@
     "gulp-sort": "^1.1.1",
     "gulp-sourcemaps": "^1.1.3",
     "gulp-uglify": "^0.3.2",
+    "gulp-wrapper": "^1.0.0",
     "jasmine": "^2.0.1",
     "karma": "^0.12.22",
     "karma-chrome-launcher": "^0.1.4",
