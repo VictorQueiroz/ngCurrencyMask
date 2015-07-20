@@ -1,20 +1,15 @@
-var gulp = require('gulp');
-var path = require('path');
-
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-var ngAnnotate = require('gulp-ng-annotate');
-var del = require('del');
-var karma = require('karma').server;
+var gulp 				= require('gulp');
+var path 				= require('path');
+var karma 			= require('karma').server;
+var concat 			= require('gulp-concat');
+var uglify 			= require('gulp-uglify');
+var wrapper			= require('gulp-wrapper');
+var sourcemaps 	= require('gulp-sourcemaps');
+var ngAnnotate 	= require('gulp-ng-annotate');
 
 var paths = {
 	scripts: ['src/**/*.js']
 };
-
-gulp.task('clean', function (cb) {
-	del(['build'], cb);
-});
 
 gulp.task('test', function (done) {
 	karma.start({
@@ -23,20 +18,20 @@ gulp.task('test', function (done) {
 	}, done);
 });
 
-gulp.task('build', ['clean'], function () {
+gulp.task('build', function () {
 	gulp.src(paths.scripts)
-		.pipe(sourcemaps.init())
-			.pipe(ngAnnotate())
-			.pipe(concat('ng-currency-mask.js'))
-		.pipe(sourcemaps.write())
+		.pipe(ngAnnotate())
+		.pipe(concat('ng-currency-mask.js'))
 		.pipe(gulp.dest('dist'));
 
 	return gulp.src(paths.scripts)
-		.pipe(sourcemaps.init())
-			.pipe(ngAnnotate())
-			.pipe(uglify())
-			.pipe(concat('ng-currency-mask.min.js'))
-		.pipe(sourcemaps.write())
+		.pipe(ngAnnotate())
+		.pipe(concat('ng-currency-mask.min.js'))
+		.pipe(wrapper({
+			header: '(function (window, undefined, angular) {',
+			footer: '}(window, undefined, angular));'
+		}))
+		.pipe(uglify())
 		.pipe(gulp.dest('dist'));
 });
 
