@@ -1,6 +1,7 @@
 {
   "name": "ngCurrencyMask",
   "version": "1.0.61",
+  "main": "dist/ng-currency-mask.min.js",
   "authors": [
     "Victor Queiroz <victorcqueirozg@gmail.com>"
   ],
@@ -20,6 +21,7 @@
     "angular": "~1.2.23"
   },
   "devDependencies": {
-    "angular-mocks": "~1.2.23"
+    "angular-mocks": "~1.2.23",
+    "angular-i18n": "~1.4.3"
   }
 }
