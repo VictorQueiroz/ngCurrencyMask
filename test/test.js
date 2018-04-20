@@ -1,11 +1,20 @@
 'use strict';
 
+import angular from 'angular';
+import ngCurrencyMask from '../src/module';
+import 'angular-mocks';
+import 'angular-i18n/angular-locale_pt-br';
+
+angular.module('testModule', [
+    ngCurrencyMask.name
+]);
+
 describe('ngCurrencyMask', function () {
 	var $rootScope, $compile;
 
-	beforeEach(module('ngCurrencyMask'));
+	beforeEach(angular.mock.module('testModule'));
 
-	beforeEach(inject(function (_$rootScope_, _$compile_) {
+	beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_) {
 		$rootScope = _$rootScope_;
 		$compile = _$compile_;
 	}));
@@ -13,7 +22,7 @@ describe('ngCurrencyMask', function () {
 	describe('ngCurrencyMask filter', function () {
 		var $filter, currencyMaskFilter;
 
-		beforeEach(inject(function (_$filter_) {
+		beforeEach(angular.mock.inject(function (_$filter_) {
 			$filter = _$filter_;
 
 			currencyMaskFilter = $filter('currencyMask');
@@ -72,7 +81,7 @@ describe('ngCurrencyMask', function () {
 	describe('ngCurrencyMask directive', function () {
 		var scope, element, form;
 
-		beforeEach(inject(function ($injector) {
+		beforeEach(angular.mock.inject(function ($injector) {
 			scope = $rootScope.$new();
 			scope.currency = 1000.00;
 		}));

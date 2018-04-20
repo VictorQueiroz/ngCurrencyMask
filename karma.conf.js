@@ -15,14 +15,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/angular/angular.min.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-i18n/angular-locale_pt-br.js',
-      
-      'src/module.js',
-
-      'test/**/*.js'
+      { pattern: 'test/**/*.js', watched: false }
     ],
+
+
+    webpack: require('./webpack.config.js'),
 
 
     // list of files to exclude
@@ -33,6 +30,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+        'src/**/*.js': ['webpack'],
+        'test/**/*.js': ['webpack']
     },
 
 
