@@ -10,6 +10,11 @@ Format an entire input as a currency. Check this live [demo](http://plnkr.co/edi
 
 ## Usage
 ```
+npm install --save ng-currencymask
+```
+
+You can still use bower mirror if you like:
+```
 bower install ng-currency-mask --save
 ```
 
