@@ -1,0 +1,17 @@
+{
+    "plugins": [
+        "transform-es2015-arrow-functions",
+        "angularjs-annotate"
+    ],
+    "env": {
+        "production": {
+            "presets": [
+                ["@babel/preset-env", {
+                    "targets": {
+                        "browsers": ["last 2 versions", "safari >= 7"]
+                    }
+                }]
+            ]
+        }
+    }
+}
